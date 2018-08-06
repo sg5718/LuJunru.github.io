@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/LuJunru.github.io/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/LuJunru.github.io/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/LuJunru.github.io/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/LuJunru.github.io/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/LuJunru.github.io/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/LuJunru.github.io/images/logo.svg?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/LuJunru.github.io/',
+    scheme: 'Mist',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="2017年10月-2018年3月，我在百分点自然语言处理组担任数据挖掘实习工程师 面试其实面试真的很糟糕…因为是第一份实习，而且当时真的是很弱的小白一只(现在也是= =)，所以面试几乎都没有答上来。面试分成笔试、技术一面、技术二面和HR面。 笔试印象最深的是第一题，问有一个信号发射器，每次以不均等的概率发射0或1信号，如何组合出一个以均等概率发射0或1的信号发射器？如何组合出一个以均等概率发射0…">
+<meta name="keywords" content="Internship">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Data Mining &amp; NLP Internship in BaiFenDian Infotech">
+<meta property="og:url" content="https://github.com/LuJunru/LuJunru.github.io/2018/03/20/BaiFenDian/index.html">
+<meta property="og:site_name" content="Lu Junru">
+<meta property="og:description" content="2017年10月-2018年3月，我在百分点自然语言处理组担任数据挖掘实习工程师 面试其实面试真的很糟糕…因为是第一份实习，而且当时真的是很弱的小白一只(现在也是= =)，所以面试几乎都没有答上来。面试分成笔试、技术一面、技术二面和HR面。 笔试印象最深的是第一题，问有一个信号发射器，每次以不均等的概率发射0或1信号，如何组合出一个以均等概率发射0或1的信号发射器？如何组合出一个以均等概率发射0…">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2018-06-05T10:05:10.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Data Mining &amp; NLP Internship in BaiFenDian Infotech">
+<meta name="twitter:description" content="2017年10月-2018年3月，我在百分点自然语言处理组担任数据挖掘实习工程师 面试其实面试真的很糟糕…因为是第一份实习，而且当时真的是很弱的小白一只(现在也是= =)，所以面试几乎都没有答上来。面试分成笔试、技术一面、技术二面和HR面。 笔试印象最深的是第一题，问有一个信号发射器，每次以不均等的概率发射0或1信号，如何组合出一个以均等概率发射0或1的信号发射器？如何组合出一个以均等概率发射0…">
+
+
+
+
+
+
+  <link rel="canonical" href="https://github.com/LuJunru/LuJunru.github.io/2018/03/20/BaiFenDian/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Data Mining & NLP Internship in BaiFenDian Infotech | Lu Junru</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/LuJunru.github.io/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Lu Junru</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">personal blog</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/LuJunru.github.io/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/LuJunru.github.io/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />About</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/LuJunru.github.io/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/LuJunru.github.io/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />Categories</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://github.com/LuJunru/LuJunru.github.io/LuJunru.github.io/2018/03/20/BaiFenDian/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lu Junru">
+      <meta itemprop="description" content="keep moving">
+      <meta itemprop="image" content="/LuJunru.github.io/images/fangjiaxuan.PNG">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lu Junru">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Data Mining & NLP Internship in BaiFenDian Infotech
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-03-20 00:00:00" itemprop="dateCreated datePublished" datetime="2018-03-20T00:00:00+08:00">2018-03-20</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-06-05 18:05:10" itemprop="dateModified" datetime="2018-06-05T18:05:10+08:00">2018-06-05</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/LuJunru.github.io/categories/Internship/" itemprop="url" rel="index"><span itemprop="name">Internship</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/LuJunru.github.io/2018/03/20/BaiFenDian/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count valine-comment-count" data-xid="/LuJunru.github.io/2018/03/20/BaiFenDian/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             Views:  
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>2017年10月-2018年3月，我在百分点自然语言处理组担任数据挖掘实习工程师</p>
+<h1 id="面试"><a href="#面试" class="headerlink" title="面试"></a>面试</h1><p>其实面试真的很糟糕…<br>因为是第一份实习，而且当时真的是很弱的小白一只(现在也是= =)，所以面试几乎都没有答上来。<br>面试分成笔试、技术一面、技术二面和HR面。</p>
+<h2 id="笔试"><a href="#笔试" class="headerlink" title="笔试"></a>笔试</h2><p>印象最深的是第一题，问有一个信号发射器，每次以不均等的概率发射0或1信号，如何组合出一个以均等概率发射0或1的信号发射器？如何组合出一个以均等概率发射0…N的信号发射器？然后…我很想当然地以为是像N次独立二项试验一样组合概率就可以，其实是要模拟二进制数。后面记不太清楚了，基本都是NLP编程题，读取文本之类的。还记得有一个算法题是要优化排序，然而我直接写用list.sort()不就好了…然后技术面就被问了list.sort()内部用的什么排序算法= =…最后就是一些机器学习的概念题，KNN和Kmeans概念之类的，比较简单。</p>
+<h2 id="技术面"><a href="#技术面" class="headerlink" title="技术面"></a>技术面</h2><p>一面基本上围绕笔试题，被疯狂吐槽了一番各种错误，基本上每道题都有错…后来坚定了我刷leetcode的决心…<br>二面问了一些实际开发的内容，先是介绍自己做过的SMP CUP 2017，再是问了诸如神经网络怎么防止过拟合等问题。说实话，这种沟通型面试我还是挺擅长的…各种嘴炮护体。</p>
+<h1 id="工作"><a href="#工作" class="headerlink" title="工作"></a>工作</h1><ul>
+<li>工程方面：论坛帖子分类、检索式社区问答系统搭建</li>
+<li>算法方面：利用N-gram和CNN实现相似句对判断、问答对质量评估，都是在问答系统搭建里面做的子模块</li>
+<li>客户方面：一个远程电话支持，一个客户现场技术支持(我一个小小的实习生，怎么就跟着去做了售前呢…可能是我的嘴炮能力被发现了= =)</li>
+</ul>
+<h1 id="感想"><a href="#感想" class="headerlink" title="感想"></a>感想</h1><h2 id="这个行业挣钱多不多？"><a href="#这个行业挣钱多不多？" class="headerlink" title="这个行业挣钱多不多？"></a>这个行业挣钱多不多？</h2><p>多。2017年可以说是中国的人工智能和机器学习元年。我们每天的数据中有80%是文本数据，所以以NLP为基础的数据处理业务增长迅速。大量的公司在分蛋糕，并且分得很轻松，俗称“降维打击”：大量的公司只是觉得人工智能高大上，实际上弱AI和机器学习很简单，各种工程用的都是github上的开源代码…</p>
+<h2 id="工作具体干什么？"><a href="#工作具体干什么？" class="headerlink" title="工作具体干什么？"></a>工作具体干什么？</h2><p>两类工作：业务线与产品线。业务指的是接销售、产品给的项目，然后做定制化开发；当然有的时候也包括售前支持，比如说去客户现场做技术支援。产品线指的是开发通用产品，比如说我一直负责开发的自动问答系统，甚至还包含了一点点算法研究的意味在里面。</p>
+<h2 id="能力要求怎么样？"><a href="#能力要求怎么样？" class="headerlink" title="能力要求怎么样？"></a>能力要求怎么样？</h2><p>三个能力最重要：自己网上找资料的能力，熟练的代码能力和持续加班的身体能力。</p>
+<h2 id="要怎么培养能力？"><a href="#要怎么培养能力？" class="headerlink" title="要怎么培养能力？"></a>要怎么培养能力？</h2><ul>
+<li>“偷看”公司以前的积累(来自前辈的教导~)</li>
+<li>多和同事聊天，勤问勤练；好记性不如烂笔头，把每天的事情都总结下来，调研+开发等</li>
+<li>多写代码，养成优秀的代码习惯：加注释+readme！！！</li>
+<li>想清楚自己的未来发展方向：工作？升学？但不管哪种，建议多读书..很多时候有啥不理解的，一看相关论文就有了思路。所以说我感觉这个领域读深一点真的没坏处，需要知识积累。</li>
+</ul>
+<h1 id="不足"><a href="#不足" class="headerlink" title="不足"></a>不足</h1><p>百分点以前一直是一个大数据工程公司，现在开始转型AI。正因如此，并且由于企业需要生存，它很多时候经营思路还是做工程，很少有沉下心来做算法研究的机会。我认为自己在工程上已经学到一点皮毛了，尽管很轻浮，但我还是希望能去一个研究型的AI公司感受一下算法研究工程师的工作∠( ᐛ 」∠)＿～</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/LuJunru.github.io/tags/Internship/" rel="tag"># Internship</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/LuJunru.github.io/2018/01/01/Festival Pictures/" rel="next" title="在创行做过的一系列节日热点图">
+                <i class="fa fa-chevron-left"></i> 在创行做过的一系列节日热点图
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/LuJunru.github.io/2018/03/26/Assertion_based QA/" rel="prev" title="Assertion-based QA with Question-Aware Open Information Extraction">
+                Assertion-based QA with Question-Aware Open Information Extraction <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/LuJunru.github.io/images/fangjiaxuan.PNG"
+                alt="Lu Junru" />
+            
+              <p class="site-author-name" itemprop="name">Lu Junru</p>
+              <p class="site-description motion-element" itemprop="description">keep moving</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/LuJunru.github.io/archives">
+                
+                    <span class="site-state-item-count">10</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/LuJunru.github.io/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/LuJunru.github.io/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/LuJunru" target="_blank" title="github"><i class="fa fa-fw fa-github"></i>github</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:lj1230@nyu.edu" target="_blank" title="e-mail"><i class="fa fa-fw fa-envelope"></i>e-mail</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#面试"><span class="nav-number">1.</span> <span class="nav-text">面试</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#笔试"><span class="nav-number">1.1.</span> <span class="nav-text">笔试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#技术面"><span class="nav-number">1.2.</span> <span class="nav-text">技术面</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#工作"><span class="nav-number">2.</span> <span class="nav-text">工作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#感想"><span class="nav-number">3.</span> <span class="nav-text">感想</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#这个行业挣钱多不多？"><span class="nav-number">3.1.</span> <span class="nav-text">这个行业挣钱多不多？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#工作具体干什么？"><span class="nav-number">3.2.</span> <span class="nav-text">工作具体干什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#能力要求怎么样？"><span class="nav-number">3.3.</span> <span class="nav-text">能力要求怎么样？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#要怎么培养能力？"><span class="nav-number">3.4.</span> <span class="nav-text">要怎么培养能力？</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#不足"><span class="nav-number">4.</span> <span class="nav-text">不足</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Lu Junru</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Mist</a> v6.3.0</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="Total Visitors">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="Total Views">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/LuJunru.github.io/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/LuJunru.github.io/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/LuJunru.github.io/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/LuJunru.github.io/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/LuJunru.github.io/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/LuJunru.github.io/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/LuJunru.github.io/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/LuJunru.github.io/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+  
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'TESN0aruYWfEKaMV36cdA8qo-gzGzoHsz',
+        appKey: '73zKQnJQHrfIPjWV2puu1YS3',
+        placeholder: 'ヾﾉ≧∀≦)o来啊，快活啊!',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

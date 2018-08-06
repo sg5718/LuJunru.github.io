@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/LuJunru.github.io/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/LuJunru.github.io/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/LuJunru.github.io/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/LuJunru.github.io/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/LuJunru.github.io/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/LuJunru.github.io/images/logo.svg?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/LuJunru.github.io/',
+    scheme: 'Mist',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="从2017年10月-2018年3月，出于实习公司的要求，我尝试搭建了一个简单的单轮检索式问答系统。 背景目前，自动问答技术的实现主要有阅读式、检索式和生成式三大类。  阅读式：指机器阅读理解，通过给定文章和针对文章提出的具体问答对训练机器的阅读理解能力，并对针对文章的新问题作出回答。机器阅读理解包括passage-based、assertion-based、sentence-based和answe">
+<meta name="keywords" content="KB-QA">
+<meta property="og:type" content="article">
+<meta property="og:title" content="My QA Robot">
+<meta property="og:url" content="https://github.com/LuJunru/LuJunru.github.io/2018/04/01/My_QA_Robot/index.html">
+<meta property="og:site_name" content="Lu Junru">
+<meta property="og:description" content="从2017年10月-2018年3月，出于实习公司的要求，我尝试搭建了一个简单的单轮检索式问答系统。 背景目前，自动问答技术的实现主要有阅读式、检索式和生成式三大类。  阅读式：指机器阅读理解，通过给定文章和针对文章提出的具体问答对训练机器的阅读理解能力，并对针对文章的新问题作出回答。机器阅读理解包括passage-based、assertion-based、sentence-based和answe">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://github.com/img/system_flow.png">
+<meta property="og:image" content="https://github.com/img/content_matching.png">
+<meta property="og:image" content="https://github.com/img/quality_evaluation.png">
+<meta property="og:image" content="https://github.com/img/online_search.png">
+<meta property="og:updated_time" content="2018-05-30T07:24:47.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="My QA Robot">
+<meta name="twitter:description" content="从2017年10月-2018年3月，出于实习公司的要求，我尝试搭建了一个简单的单轮检索式问答系统。 背景目前，自动问答技术的实现主要有阅读式、检索式和生成式三大类。  阅读式：指机器阅读理解，通过给定文章和针对文章提出的具体问答对训练机器的阅读理解能力，并对针对文章的新问题作出回答。机器阅读理解包括passage-based、assertion-based、sentence-based和answe">
+<meta name="twitter:image" content="https://github.com/img/system_flow.png">
+
+
+
+
+
+
+  <link rel="canonical" href="https://github.com/LuJunru/LuJunru.github.io/2018/04/01/My_QA_Robot/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>My QA Robot | Lu Junru</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/LuJunru.github.io/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Lu Junru</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">personal blog</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/LuJunru.github.io/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/LuJunru.github.io/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />About</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/LuJunru.github.io/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/LuJunru.github.io/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />Categories</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://github.com/LuJunru/LuJunru.github.io/LuJunru.github.io/2018/04/01/My_QA_Robot/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lu Junru">
+      <meta itemprop="description" content="keep moving">
+      <meta itemprop="image" content="/LuJunru.github.io/images/fangjiaxuan.PNG">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lu Junru">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">My QA Robot
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-04-01 00:00:00" itemprop="dateCreated datePublished" datetime="2018-04-01T00:00:00+08:00">2018-04-01</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-05-30 15:24:47" itemprop="dateModified" datetime="2018-05-30T15:24:47+08:00">2018-05-30</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/LuJunru.github.io/categories/Coding/" itemprop="url" rel="index"><span itemprop="name">Coding</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/LuJunru.github.io/2018/04/01/My_QA_Robot/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count valine-comment-count" data-xid="/LuJunru.github.io/2018/04/01/My_QA_Robot/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             Views:  
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>从2017年10月-2018年3月，出于实习公司的要求，我尝试搭建了一个简单的单轮检索式问答系统。</p>
+<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>目前，自动问答技术的实现主要有阅读式、检索式和生成式三大类。</p>
+<ul>
+<li>阅读式：指机器阅读理解，通过给定文章和针对文章提出的具体问答对训练机器的阅读理解能力，并对针对文章的新问题作出回答。机器阅读理解包括passage-based、assertion-based、sentence-based和answer-span-based等不同粒度。阅读式的问题是知识边界狭窄，训练语料构筑困难，较适合于专业领域的机器人。</li>
+<li>生成式：指使用Seq2Seq搭配海量语料训练具有自主对话能力的系统。生成式理论上可实现不受知识局限的通用机器人，但目前生成式最大的问题是答非所问、胡言乱语，无法表现出人类在解决问题时的逻辑自洽、思维发散和自然表达等能力。这个实现技术比较多用在闲聊机器人方面。</li>
+<li>检索式：检索式是一种取长补短的中间无监督技术。检索式要求搜集众多在线问答网站海量的历史问答对语料作为知识库，通过检索与新问题最接近的历史相似问题和最匹配这一新问题的历史最佳问答，变相完成自动问答任务。检索技术既避免了知识的局限，又利用了人类的先验经验积累，是当前处理通用问答任务较合适的方法之一。</li>
+</ul>
+<h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><p>结合实际，我的设计为：</p>
+<ul>
+<li>1.通过爬虫和用户历史数据建立QA式本地知识库；</li>
+<li>2.当给定用户新问题时，系统先通过ES（ElasticSearch，<a href="https://blog.csdn.net/cyony/article/details/65437708?locationNum=9&amp;fps=1" target="_blank" rel="noopener">ES原理</a>）进行词义级的本地检索得到参考问答初选集；</li>
+<li>3.使用语义深度匹配和问答质量评估从初选集中精选出参考问答精选集，按得分降序返回最终参考问答；</li>
+<li>4.若没有任何问答通过精选，则启动在线搜索获取标识有“最佳问答”的参考问答返回给用户，并将其中的优质问答缓存到本地ES索引中。</li>
+</ul>
+<p><img src="/img/system_flow.png" alt=""></p>
+<table>
+<thead>
+<tr>
+<th>变量或参数名</th>
+<th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>StopWords</td>
+<td style="text-align:left">停用词表</td>
+</tr>
+<tr>
+<td>KeyWords</td>
+<td style="text-align:left">核心主题词表</td>
+</tr>
+<tr>
+<td>Text_Main_Content(TMC)</td>
+<td style="text-align:left">用户新问题经分词、去除停用词后的分词结果</td>
+</tr>
+<tr>
+<td>Keywords_in_Content(KIC)</td>
+<td style="text-align:left">用户新问题命中的核心主题词</td>
+</tr>
+<tr>
+<td>Text_NER_List(TNL)</td>
+<td style="text-align:left">用户新问题中的分词后的NER</td>
+</tr>
+<tr>
+<td>Question_Main_Content(QMC)</td>
+<td style="text-align:left">ES本地检索返回的候选问题经分词、去除停用词后的分词结果</td>
+</tr>
+<tr>
+<td>QuestionScore(QS)</td>
+<td style="text-align:left">语义匹配模块返回的候选问题与新问题的相似度得分</td>
+</tr>
+<tr>
+<td>AnswerScore(AS)</td>
+<td style="text-align:left">通过答案排序模块计算出的，候选问题对应的候选答案与用户新问题组成“好问答对”的概率得分</td>
+</tr>
+<tr>
+<td>FinalScore(FS)</td>
+<td style="text-align:left">候选问答在精选规则下的最终得分</td>
+</tr>
+<tr>
+<td>THRESHOLD</td>
+<td style="text-align:left">控制在精选集中记录ES初选结果的阈值。</td>
+</tr>
+<tr>
+<td>ZHIDAOMAX</td>
+<td style="text-align:left">控制在线搜索时从百度知道返回的问答数量。</td>
+</tr>
+<tr>
+<td>SAVESCORE</td>
+<td style="text-align:left">控制增量存储模块中的百度知道问答对的阈值</td>
+</tr>
+<tr>
+<td>ESMAX</td>
+<td style="text-align:left">控制精选集中的精选问答数量</td>
+</tr>
+</tbody>
+</table>
+<h1 id="子模块"><a href="#子模块" class="headerlink" title="子模块"></a>子模块</h1><p>根据上文项目思路的介绍，除主函数外，共调用了语义深度匹配、问答质量评估和在线搜索缓存三大子模块</p>
+<ul>
+<li><p>1.语义深度匹配子模块：<a href="http://blog.csdn.net/malefactor/article/details/50374237" target="_blank" rel="noopener">参考项目</a></p>
+<ul>
+<li>句对预处理及建模: 将输入的句子1与句子2进行分词，然后将两组切分后的结果两两计算基于Word Embedding的余弦相似度，并填充成上图所示的2D Feature Map形式。当句对的分词list长度不同时，使用0填充缺失值。</li>
+<li><p>模型训练与调用：训练时，将训练集句对的Feature Map输入到CNN模型中，获取语义匹配模型并保存；预测时，调用预训练好的语义匹配模型，输入新句对的Feature Map，将返回这组句对的相似概率得分。</p>
+<p><img src="/img/content_matching.png" alt=""></p>
+</li>
+</ul>
+</li>
+<li><p>2.问答质量评估子模块：使用若干文本和非文本特征训练二分类器，<a href="http://pdfs.semanticscholar.org/c994/a986f7d1808bda7c668af7f682b40b712971.pdf" target="_blank" rel="noopener">参考论文</a></p>
+<p>  <img src="/img/quality_evaluation.png" alt=""></p>
+</li>
+<li><p>3.在线搜索缓存子模块：</p>
+<ul>
+<li>百度主页搜索: 向百度主页请求输入用户新问题后的检索结果，若检索结果的第一条中包含预设结果链接，则获取内容并向用户返回。</li>
+<li>百度知道搜索：当百度主页搜索没有结果时，在百度知道页面请求输入用户新问题后的检索结果，若Top K条结果中包含带有“最佳回答”标识的回答，则获取对应问答内容并返回。</li>
+<li><p>本地缓存优质问答：当百度知道搜索有结果返回时，调用问答质量评价子模块对该问答对进行质量判断，将高于设定阈值(SAVESCORE)的问答对缓存到本地知识库。缓存机制有助于后续提升系统整体的响应速度及性能。</p>
+<p><img src="/img/online_search.png" alt=""></p>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><p><a href="https://github.com/LuJunru/My_QA_Robot">My QA Robot</a></p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>项目内：1.项目执行时，语义深度匹配子模块缺少合适的负样本(词义上相似但语义不相似的句对)；2.各种参数阈值很难调试。<br>项目外：工程性太重，并且以检索为主，在语义理解、匹配和推理方面展开太少。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/LuJunru.github.io/tags/NLP/" rel="tag"># NLP</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/LuJunru.github.io/2018/03/26/Assertion_based QA/" rel="next" title="Assertion-based QA with Question-Aware Open Information Extraction">
+                <i class="fa fa-chevron-left"></i> Assertion-based QA with Question-Aware Open Information Extraction
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/LuJunru.github.io/2018/05/03/Siamese-LSTM/" rel="prev" title="孪生网络(Siamese-LSTM)">
+                孪生网络(Siamese-LSTM) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/LuJunru.github.io/images/fangjiaxuan.PNG"
+                alt="Lu Junru" />
+            
+              <p class="site-author-name" itemprop="name">Lu Junru</p>
+              <p class="site-description motion-element" itemprop="description">keep moving</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/LuJunru.github.io/archives">
+                
+                    <span class="site-state-item-count">10</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/LuJunru.github.io/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/LuJunru.github.io/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/LuJunru" target="_blank" title="github"><i class="fa fa-fw fa-github"></i>github</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:lj1230@nyu.edu" target="_blank" title="e-mail"><i class="fa fa-fw fa-envelope"></i>e-mail</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#思路"><span class="nav-number">2.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#子模块"><span class="nav-number">3.</span> <span class="nav-text">子模块</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#代码"><span class="nav-number">4.</span> <span class="nav-text">代码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Lu Junru</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Mist</a> v6.3.0</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="Total Visitors">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="Total Views">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/LuJunru.github.io/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/LuJunru.github.io/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/LuJunru.github.io/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/LuJunru.github.io/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/LuJunru.github.io/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/LuJunru.github.io/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/LuJunru.github.io/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/LuJunru.github.io/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+  
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'TESN0aruYWfEKaMV36cdA8qo-gzGzoHsz',
+        appKey: '73zKQnJQHrfIPjWV2puu1YS3',
+        placeholder: 'ヾﾉ≧∀≦)o来啊，快活啊!',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
